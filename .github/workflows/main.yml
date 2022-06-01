@@ -3,18 +3,27 @@ name: Simple Usage
 on: push
 
 jobs:
-  convert_via_pandoc:
-    runs-on: ubuntu-18.04
+  generate_svgs:
+    name: Generate SVGs for Documentation
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
           cache: 'yarn'
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@annaliseai'
-      - if: steps.get_branch.outputs.branch == 'main'
-        run: yarn && ./scripts/generateSVGs.sh
+      - run: yarn
+      - run: ./scripts/generateSVGs.sh
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Generated SVGs
+          push_options: '--force'
+  convert_via_pandoc:
+    name: Convert Markdown documents to Docx
+    runs-on: ubuntu-18.04
+    needs: [generate_svgs]
+    steps:
+      - uses: actions/checkout@v2
       - uses: docker://pandoc/core:2.9
         with:
           args: >-
@@ -25,4 +34,5 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated Change
+          push_options: '--force'
           
