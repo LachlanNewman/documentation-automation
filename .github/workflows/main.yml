@@ -7,9 +7,14 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - name: create file list
-        id: files_list
-        run: echo "::set-output name=files::$(printf '"%s" ' ./documents/*.md)"
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'yarn'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@annaliseai'
+      - if: steps.get_branch.outputs.branch == 'main'
+        run: yarn && ./scripts/generateSVGs.sh
       - uses: docker://pandoc/core:2.9
         with:
           args: >-
