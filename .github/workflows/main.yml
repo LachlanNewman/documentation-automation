@@ -3,21 +3,21 @@ name: Simple Usage
 on: push
 
 jobs:
-  generate_svgs:
-    name: Generate SVGs for Documentation
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-          cache: 'yarn'
-      - run: yarn
-      - run: ./scripts/generateSVGs.sh
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Generated SVGs
-          push_options: '--force'
+  # generate_svgs:
+  #   name: Generate SVGs for Documentation
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '14'
+  #         cache: 'yarn'
+  #     - run: yarn
+  #     - run: ./scripts/generateSVGs.sh
+  #     - uses: stefanzweifel/git-auto-commit-action@v4
+  #       with:
+  #         commit_message: Generated SVGs
+  #         push_options: '--force'
   convert_via_pandoc:
     name: Convert Markdown documents to Docx
     runs-on: ubuntu-18.04
