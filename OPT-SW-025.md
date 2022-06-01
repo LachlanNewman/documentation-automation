@@ -118,10 +118,15 @@ An asynchronous microservices architecture has been selected as the appropriate 
 
 ### 4.2.1Cloud Architecture Diagram
 
-@startuml
-:Hello world;
-:This is defined on
-several **lines**;
-@enduml
+```mermaid
+flowchart LR
+
+A[Hard] -->|Text| B(Round)
+B --> C{Decision}
+C -->|One| D[Result 1]
+C -->|Two| E[Result 2]
+```
+
+
 
 _Figure 1: Cloud Architecture Diagram_
