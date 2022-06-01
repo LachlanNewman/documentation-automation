@@ -6,6 +6,7 @@
   "author": "LachlanNewman <lachnewman007@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "doctoc": "2.2.0"
+    "doctoc": "2.2.0",
+    "mermaid.cli": "^0.5.1"
   }
 }
