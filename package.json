@@ -7,7 +7,9 @@
   "license": "MIT",
   "devDependencies": {
     "@mermaid-js/mermaid-cli": "^9.1.2",
-    "@types/mermaid": "^8.2.9",
-    "doctoc": "2.2.0"
+    "@types/mermaid": "^8.2.9"
+  },
+  "dependencies": {
+    "md-to-pdf": "^5.1.0"
   }
 }

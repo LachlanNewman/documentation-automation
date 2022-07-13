@@ -3,36 +3,17 @@ name: Simple Usage
 on: push
 
 jobs:
-  # generate_svgs:
-  #   name: Generate SVGs for Documentation
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v2
-  #       with:
-  #         node-version: '14'
-  #         cache: 'yarn'
-  #     - run: yarn
-  #     - run: ./scripts/generateSVGs.sh
-  #     - uses: stefanzweifel/git-auto-commit-action@v4
-  #       with:
-  #         commit_message: Generated SVGs
-  #         push_options: '--force'
-  convert_via_pandoc:
-    name: Convert Markdown documents to Docx
-    runs-on: ubuntu-18.04
-    needs: [generate_svgs]
+  markdown-to-pdf:
+    name: Convert Markdown documents to PDF
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: docker://pandoc/core:2.9
+      - uses: actions/setup-node@v2
         with:
-          args: >-
-           -s
-           -o
-           ./documents/OPT-SW-025.docx
-           ./documents/OPT-SW-025.md
-      - uses: stefanzweifel/git-auto-commit-action@v4
+          node-version: 16
+      - run: yarn
+      - run: yarn md-to-pdf ./README.md
+      - uses: actions/upload-artifact@v3
         with:
-          commit_message: Automated Change
-          push_options: '--force'
-          
+            name: README.pdf
+            path: ./README.pdf
