@@ -140,7 +140,7 @@ Listed below are the high-level functions of the Backend Services.
 
 An asynchronous microservices architecture has been selected as the appropriate design choice for the Annalise Enterprise backend using queues (AWS SQS for Cloud and RabbitMQ for On Prem) to transmit messages from one service to the next in a unidirectional pattern. The aim of this approach is to ensure that each component has a small and narrowed function which is decoupled as much as possible from all the other narrowed functions that the backend services provide. The advantage of the microservices pattern is that each individual component can be independently scaled as needed and mitigates against single points of failure i.e., if individual components fail, then they can be restarted in isolation of the other components.
 
-### 4.2.1 Cloud Architecture Diagram
+### Cloud Architecture Diagram
 
 ```mermaid
 flowchart LR
@@ -201,3 +201,51 @@ ctb-connector --> Ultron-Response-Queue
 ```
 
 _Figure 1: Cloud Architecture Diagram_
+
+
+# C4 Diagam
+
+```mermaid
+c4Context
+    title System Context diagram for Internet Banking System
+    Enterprise_Boundary(b0, "BankBoundary0") {
+      Person(customerA, "Banking Customer A", "A customer of the bank, with personal bank accounts.")
+      Person(customerB, "Banking Customer B")      
+      Person_Ext(customerC, "Banking Customer C", "desc")            
+
+      Person(customerD, "Banking Customer D", "A customer of the bank, <br/> with personal bank accounts.")
+
+      System(SystemAA, "Internet Banking System", "Allows customers to view information about their bank accounts, and make payments.")  
+
+      Enterprise_Boundary(b1, "BankBoundary") {
+        
+        SystemDb_Ext(SystemE, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.")      
+
+        System_Boundary(b2, "BankBoundary2") {  
+          System(SystemA, "Banking System A")  
+          System(SystemB, "Banking System B", "A system of the bank, with personal bank accounts. next line.")        
+        } 
+
+        System_Ext(SystemC, "E-mail system", "The internal Microsoft Exchange e-mail system.") 
+        SystemDb(SystemD, "Banking System D Database", "A system of the bank, with personal bank accounts.") 
+
+        Boundary(b3, "BankBoundary3", "boundary") {  
+          SystemQueue(SystemF, "Banking System F Queue", "A system of the bank.")        
+          SystemQueue_Ext(SystemG, "Banking System G Queue", "A system of the bank, with personal bank accounts.") 
+        }
+      }
+    }
+    
+    BiRel(customerA, SystemAA, "Uses")
+    BiRel(SystemAA, SystemE, "Uses")
+    Rel(SystemAA, SystemC, "Sends e-mails", "SMTP")
+    Rel(SystemC, customerA, "Sends e-mails to")
+
+    UpdateElementStyle(customerA, $fontColor="red", $bgColor="grey", $borderColor="red")
+    UpdateRelStyle(customerA, SystemAA, $textColor="blue", $lineColor="blue", $offsetX="5")
+    UpdateRelStyle(SystemAA, SystemE, $textColor="blue", $lineColor="blue", $offsetY="-10")
+    UpdateRelStyle(SystemAA, SystemC, $textColor="blue", $lineColor="blue", $offsetY="-40", $offsetX="-50")
+    UpdateRelStyle(SystemC, customerA, $textColor="red", $lineColor="red", $offsetX="-50", $offsetY="20")
+    
+    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
+```
