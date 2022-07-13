@@ -10,6 +10,9 @@
     "@types/mermaid": "^8.2.9"
   },
   "dependencies": {
-    "md-to-pdf": "^5.1.0"
+    "@types/node": "^18.0.3",
+    "md-to-pdf": "^5.1.0",
+    "ts-node": "^10.8.2",
+    "typescript": "^4.7.4"
   }
 }

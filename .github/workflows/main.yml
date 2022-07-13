@@ -12,8 +12,10 @@ jobs:
         with:
           node-version: 16
       - run: yarn
-      - run: yarn md-to-pdf ./README.md
+      - run: yarn ts-node ./scripts/extract-diagrams
+      - run: yarn mmdc -i ./diagrams/test.md -o diagrams/test.svg
+      - run: yarn md-to-pdf ./new-test.md
       - uses: actions/upload-artifact@v3
         with:
-            name: README.pdf
-            path: ./README.pdf
+            name: new-test.pdf
+            path: ./new-test.pdf
