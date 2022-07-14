@@ -13,9 +13,8 @@ jobs:
           node-version: 16
       - run: yarn
       - run: yarn ts-node ./scripts/extract-diagrams
-      - run: yarn mmdc -i ./diagrams/test.md -o diagrams/test.svg
-      - run: yarn md-to-pdf ./new-test.md
+      - run: yarn md-to-pdf ./test.md
       - uses: actions/upload-artifact@v3
         with:
-            name: new-test.pdf
-            path: ./new-test.pdf
+            name: test.pdf
+            path: ./test.pdf
